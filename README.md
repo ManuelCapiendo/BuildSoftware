@@ -31,7 +31,7 @@ The following **additional** features are implemented:
 
 ## Architecture
 
-![Architecture Diagram](docs\architecture.png)
+![Architecture Diagram](docs/architecture.png)
 
 ## Video Walkthrough
 
