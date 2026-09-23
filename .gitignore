@@ -1,0 +1,16 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Environment files (real keys live here)
+.env
+.env.local
+.env.*.local
+
+# Vercel CLI
+.vercel/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
