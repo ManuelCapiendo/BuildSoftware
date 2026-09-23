@@ -2,7 +2,7 @@
 node_modules/
 dist/
 
-# Environment files (real keys live here)
+# Environment files
 .env
 .env.local
 .env.*.local
