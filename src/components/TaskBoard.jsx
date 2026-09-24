@@ -35,6 +35,12 @@ export default function TaskBoard({ user }) {
     return true;
   }
 
+  async function updateTask(id, changes) {
+    const { error } = await supabase.from("tasks").update(changes).eq("id", id);
+    if (error) setError("Could not update task: " + error.message);
+    await loadTasks();
+  }
+
   return (
     <section>
       <TaskForm onAdd={addTask} />
@@ -47,7 +53,7 @@ export default function TaskBoard({ user }) {
       ) : (
         <ul className="task-list">
           {tasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
+            <TaskItem key={task.id} task={task} onUpdate={updateTask} />
           ))}
         </ul>
       )}
