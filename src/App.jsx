@@ -1,32 +1,63 @@
 import { useEffect, useState } from "react";
 import { supabase, isConfigured } from "./supabaseClient";
+import AuthForm from "./components/AuthForm";
 
 export default function App() {
-  const [status, setStatus] = useState(
-    isConfigured ? "Checking connection..." : "Missing VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY."
-  );
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isConfigured) return;
-
-    supabase
-      .from("tasks")
-      .select("id", { count: "exact", head: true })
-      .then(({ error }) => {
-        setStatus(error ? "Connection error: " + error.message : "Connected to Supabase.");
-      });
+    if (!isConfigured) {
+      setLoading(false);
+      return;
+    }
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setLoading(false);
+    });
+    const { data } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+    });
+    return () => data.subscription.unsubscribe();
   }, []);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+  }
 
   return (
     <>
       <header className="topbar">
         <h1 className="brand">Taskboard</h1>
+        {session && (
+          <div className="user-area">
+            <span>{session.user.email}</span>
+            <button className="btn btn-ghost" type="button" onClick={handleLogout}>
+              Log out
+            </button>
+          </div>
+        )}
       </header>
+
       <main>
-        <section className="panel auth">
-          <h2>Setup check</h2>
-          <p>{status}</p>
-        </section>
+        {!isConfigured ? (
+          <section className="panel auth">
+            <h2>Setup needed</h2>
+            <p>
+              Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to a .env file (local) or to
+              your Vercel project's environment variables, then restart or redeploy.
+            </p>
+          </section>
+        ) : loading ? (
+          <p className="empty">Loading...</p>
+        ) : session ? (
+          <section className="panel auth">
+            <h2>You are logged in</h2>
+            <p>Your task list comes in the next step.</p>
+          </section>
+        ) : (
+          <AuthForm />
+        )}
       </main>
     </>
   );
