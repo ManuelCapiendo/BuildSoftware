@@ -1,0 +1,120 @@
+:root {
+  --ink: #1d2433;
+  --muted: #5d6679;
+  --paper: #f3f5f9;
+  --surface: #ffffff;
+  --line: #d5dbe6;
+  --accent: #2f55c9;
+  --progress: #b7791f;
+  --done: #2e7d5b;
+  --danger: #b3261e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: var(--ink);
+  color: #fff;
+}
+.brand { margin: 0; font-size: 1.5rem; }
+.user-area { display: flex; align-items: center; gap: 0.75rem; font-size: 0.95rem; }
+.user-area .btn-ghost { color: #fff; border-color: rgba(255,255,255,0.5); }
+
+main { max-width: 760px; margin: 2rem auto; padding: 0 1rem; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.panel h2 { margin: 0 0 0.75rem; font-size: 1.15rem; }
+
+.auth { max-width: 420px; margin: 3rem auto; }
+.tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; border-bottom: 1px solid var(--line); }
+.tab {
+  background: none; border: none; padding: 0.5rem 0.25rem; margin-bottom: -1px;
+  font: inherit; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent;
+}
+.tab.active { color: var(--ink); font-weight: 700; border-bottom-color: var(--accent); }
+.auth-form { display: flex; flex-direction: column; gap: 0.4rem; }
+.auth-form label { font-weight: 700; font-size: 0.9rem; margin-top: 0.4rem; }
+.auth-form .btn { margin-top: 1rem; }
+
+input, select {
+  font: inherit;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+}
+input:focus, select:focus, .btn:focus-visible, .tab:focus-visible, .filter:focus-visible {
+  outline: 3px solid rgba(47, 85, 201, 0.35);
+  outline-offset: 1px;
+}
+
+.btn {
+  font: inherit; font-weight: 700; padding: 0.55rem 1rem;
+  border-radius: 6px; border: 1px solid transparent; cursor: pointer;
+}
+.btn:disabled { opacity: 0.6; cursor: wait; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #2446ad; }
+.btn-ghost { background: transparent; border-color: var(--line); color: var(--ink); }
+.btn-ghost:hover { border-color: var(--muted); }
+.btn-danger { background: transparent; border-color: #e7b9b5; color: var(--danger); }
+.btn-danger:hover { background: #fbeceb; }
+
+.message { min-height: 1.25rem; margin: 0.5rem 0 0; font-size: 0.9rem; color: var(--done); }
+.message.error { color: var(--danger); }
+
+.add-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.add-row #new-title { flex: 1 1 240px; }
+
+.filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.filter {
+  font: inherit; font-size: 0.9rem; padding: 0.35rem 0.85rem;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+  color: var(--muted); cursor: pointer;
+}
+.filter.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.task-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.task {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;
+  background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--accent);
+  border-radius: 6px; padding: 0.85rem 1rem;
+}
+.task.status-in_progress { border-left-color: var(--progress); }
+.task.status-done { border-left-color: var(--done); }
+.task.status-done .task-title { text-decoration: line-through; color: var(--muted); }
+.task-info { display: flex; flex-direction: column; min-width: 0; }
+.task-title { font-weight: 700; overflow-wrap: anywhere; }
+.task-meta { font-size: 0.85rem; color: var(--muted); }
+.task-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.task.editing input[type="text"] { flex: 1 1 220px; }
+
+.empty { text-align: center; color: var(--muted); padding: 2rem 0; }
+
+@media (max-width: 520px) {
+  .task-actions { width: 100%; }
+}
