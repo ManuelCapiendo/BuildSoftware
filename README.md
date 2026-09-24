@@ -39,7 +39,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of the implemented features:
 
-[LINK HERE]
+[![Watch the video](https://www.youtube.com/watch?v=9b5lMbPzY-c)](https://www.youtube.com/watch?v=9b5lMbPzY-c)
 
 ## Notes
 
