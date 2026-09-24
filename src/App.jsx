@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase, isConfigured } from "./supabaseClient";
 import AuthForm from "./components/AuthForm";
+import TaskBoard from "./components/TaskBoard";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -51,10 +52,7 @@ export default function App() {
         ) : loading ? (
           <p className="empty">Loading...</p>
         ) : session ? (
-          <section className="panel auth">
-            <h2>You are logged in</h2>
-            <p>Your task list comes in the next step.</p>
-          </section>
+          <TaskBoard user={session.user} />
         ) : (
           <AuthForm />
         )}
