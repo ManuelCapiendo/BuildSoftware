@@ -6,6 +6,8 @@ Z-Number: **Z23746021**
 
 **Taskboard** is a full-stack web app where users can register an account, log in, and manage their own private list of tasks. Each task has a title, an optional due date, and a status (To do, In progress, Done). All data is stored in a PostgreSQL database and each user can only see their own tasks.
 
+Project Link (If Deployed): **https://build-software-ruddy.vercel.app/**
+
 Time spent: **X** hours spent in total
 
 ## Required Features
