@@ -3,8 +3,16 @@ import { supabase } from "../supabaseClient";
 import TaskForm from "./TaskForm";
 import TaskItem from "./TaskItem";
 
+const FILTERS = [
+  { value: "all", label: "All" },
+  { value: "todo", label: "To do" },
+  { value: "in_progress", label: "In progress" },
+  { value: "done", label: "Done" },
+];
+
 export default function TaskBoard({ user }) {
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("all");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -48,18 +56,33 @@ export default function TaskBoard({ user }) {
     await loadTasks();
   }
 
+  const visible = filter === "all" ? tasks : tasks.filter((t) => t.status === filter);
+
   return (
     <section>
       <TaskForm onAdd={addTask} />
       {error && <p className="message error" role="status">{error}</p>}
 
+      <div className="filters" role="group" aria-label="Filter tasks">
+        {FILTERS.map((f) => (
+          <button
+            key={f.value}
+            type="button"
+            className={`filter ${filter === f.value ? "active" : ""}`}
+            onClick={() => setFilter(f.value)}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
       {loading ? (
         <p className="empty">Loading tasks...</p>
-      ) : tasks.length === 0 ? (
-        <p className="empty">No tasks yet. Add one above.</p>
+      ) : visible.length === 0 ? (
+        <p className="empty">No tasks here. Add one above.</p>
       ) : (
         <ul className="task-list">
-          {tasks.map((task) => (
+          {visible.map((task) => (
             <TaskItem key={task.id} task={task} onUpdate={updateTask} onDelete={deleteTask} />
           ))}
         </ul>
