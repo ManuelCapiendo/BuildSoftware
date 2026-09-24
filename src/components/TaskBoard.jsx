@@ -41,6 +41,13 @@ export default function TaskBoard({ user }) {
     await loadTasks();
   }
 
+  async function deleteTask(id) {
+    if (!window.confirm("Delete this task?")) return;
+    const { error } = await supabase.from("tasks").delete().eq("id", id);
+    if (error) setError("Could not delete task: " + error.message);
+    await loadTasks();
+  }
+
   return (
     <section>
       <TaskForm onAdd={addTask} />
@@ -53,7 +60,7 @@ export default function TaskBoard({ user }) {
       ) : (
         <ul className="task-list">
           {tasks.map((task) => (
-            <TaskItem key={task.id} task={task} onUpdate={updateTask} />
+            <TaskItem key={task.id} task={task} onUpdate={updateTask} onDelete={deleteTask} />
           ))}
         </ul>
       )}

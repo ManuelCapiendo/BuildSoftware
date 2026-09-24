@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const STATUS_LABELS = { todo: "To do", in_progress: "In progress", done: "Done" };
 
-export default function TaskItem({ task, onUpdate }) {
+export default function TaskItem({ task, onUpdate, onDelete }) {
   const [editing, setEditing] = useState(false);
   const [title, setTitle] = useState(task.title);
   const [dueDate, setDueDate] = useState(task.due_date || "");
@@ -50,7 +50,6 @@ export default function TaskItem({ task, onUpdate }) {
   return (
     <li className={`task status-${task.status}`}>
       <div className="task-info">
-        {/* React escapes text automatically, which prevents script injection */}
         <span className="task-title">{task.title}</span>
         <span className="task-meta">{task.due_date ? `Due ${task.due_date}` : "No due date"}</span>
       </div>
@@ -68,6 +67,9 @@ export default function TaskItem({ task, onUpdate }) {
         </select>
         <button className="btn btn-ghost" type="button" onClick={startEdit}>
           Edit
+        </button>
+        <button className="btn btn-danger" type="button" onClick={() => onDelete(task.id)}>
+          Delete
         </button>
       </div>
     </li>
